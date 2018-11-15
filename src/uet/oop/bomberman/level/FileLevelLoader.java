@@ -9,6 +9,7 @@ import uet.oop.bomberman.entities.character.enemy.Balloon;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
+import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.entities.tile.item.BombItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
@@ -90,7 +91,7 @@ public class FileLevelLoader extends LevelLoader {
                     }
 
                     case '#': { // Wall tile
-                        _board.addEntity(position, new Grass(x, y, Sprite.wall));
+                        _board.addEntity(position, new Wall(x, y, Sprite.wall));
                         break;
                     }
 
@@ -165,7 +166,7 @@ public class FileLevelLoader extends LevelLoader {
                     }
 
                     default: { // Load grass default
-                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
+                        _board.addEntity(position, new Brick(x, y, Sprite.brick));
                         break;
                     }
                 }

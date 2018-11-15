@@ -3,10 +3,14 @@ package uet.oop.bomberman.entities.character;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.tile.Wall;
+import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
+import uet.oop.bomberman.level.Coordinates;
 
 import java.util.Iterator;
 import java.util.List;
@@ -109,20 +113,92 @@ public class Bomber extends Character {
 
     @Override
     protected void calculateMove() {
-        // TODO: xử lý nhận tín hiệu điều khiển hướng đi từ _input và gọi move() để thực hiện di chuyển
-        // TODO: nhớ cập nhật lại giá trị cờ _moving khi thay đổi trạng thái di chuyển
+
+        double x = this._x;
+        double y = this._y;
+
+        if (_input.up) {
+            y -= Game.getBomberSpeed();
+            this._direction = 0;
+        }
+
+        if (_input.right) {
+            x += Game.getBomberSpeed();
+            this._direction = 1;
+        }
+
+        if (_input.down) {
+            y += Game.getBomberSpeed();
+            this._direction = 2;
+        }
+
+        if (_input.left) {
+            x -= Game.getBomberSpeed();
+            this._direction = 3;
+        }
+
+        this.move(x, y);
+
+        if (_input.right || _input.up || _input.down || _input.left) {
+            this._moving = true;
+        } else {
+            this._moving = false;
+        }
     }
 
     @Override
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        return false;
+        double dependedDirectionX = x;
+        double dependedDirectionY = y;
+
+        switch (this._direction){
+
+            case 0: {
+                dependedDirectionX+=Game.HALF_TITLE_SIZE;
+                dependedDirectionY-=Game.TILES_SIZE;
+                break;
+            }
+
+            case 1:{
+                dependedDirectionX+=Game.TILES_SIZE;
+                dependedDirectionY-=Game.HALF_TITLE_SIZE;
+                break;
+            }
+
+            case 2:{
+                dependedDirectionX+=Game.HALF_TITLE_SIZE;
+//                dependedDirectionY+=Game.TILES_SIZE;
+                break;
+            }
+
+            case 3:{
+                dependedDirectionY-=Game.HALF_TITLE_SIZE;
+                break;
+            }
+
+            default:{
+                break;
+            }
+        }
+
+        Entity entity = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX), Coordinates.pixelToTile(dependedDirectionY), this);
+        System.out.println(entity.toString()+ " "+ Coordinates.pixelToTile(dependedDirectionX)+ " " + Coordinates.pixelToTile(dependedDirectionY) );
+        if (entity instanceof Wall|| entity instanceof Bomb || entity instanceof LayeredEntity){
+            return false;
+        }
+
+
+        return true;
     }
 
     @Override
     public void move(double xa, double ya) {
-        // TODO: sử dụng canMove() để kiểm tra xem có thể di chuyển tới điểm đã tính toán hay không và thực hiện thay đổi tọa độ _x, _y
-        // TODO: nhớ cập nhật giá trị _direction sau khi di chuyển
+        if (this.canMove(xa, ya)) {
+            this._x = xa;
+            this._y = ya;
+        }
+
     }
 
     @Override
