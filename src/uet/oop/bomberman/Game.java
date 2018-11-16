@@ -18,7 +18,7 @@ public class Game extends Canvas {
 	public static final int TILES_SIZE = 16,
 							WIDTH = TILES_SIZE * (31 / 2),
 							HEIGHT = 13 * TILES_SIZE,
-							HALF_TITLE_SIZE = 8;
+							MAXIMUM_JUMP_DISTANCE = 4;
 
 	public static int SCALE = 3;
 	
@@ -27,7 +27,8 @@ public class Game extends Canvas {
 	private static final int BOMBRATE = 1;
 	private static final int BOMBRADIUS = 1;
 	private static final double BOMBERSPEED = 1.0;
-	
+	private static final double ENEMY_SPEED = 1.0;
+
 	public static final int TIME = 200;
 	public static final int POINTS = 0;
 	
@@ -36,7 +37,8 @@ public class Game extends Canvas {
 	protected static int bombRate = BOMBRATE;
 	protected static int bombRadius = BOMBRADIUS;
 	protected static double bomberSpeed = BOMBERSPEED;
-	
+	protected static double enemySpeed = ENEMY_SPEED;
+
 	
 	protected int _screenDelay = SCREENDELAY;
 	
@@ -159,8 +161,12 @@ public class Game extends Canvas {
 	public static double getBomberSpeed() {
 		return bomberSpeed;
 	}
-	
-	public static int getBombRate() {
+
+    public static double getEnemySpeed() {
+        return enemySpeed;
+    }
+
+    public static int getBombRate() {
 		return bombRate;
 	}
 	

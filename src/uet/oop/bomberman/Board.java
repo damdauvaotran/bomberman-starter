@@ -223,7 +223,6 @@ public class Board implements IRender {
 	}
 	
 	public Entity getEntityAt(double x, double y) {
-		System.out.println(_entities.length);
 		return _entities[(int)x + (int)y * _levelLoader.getWidth()];
 	}
 	

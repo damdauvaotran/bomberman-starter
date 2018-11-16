@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.graphics.Screen;
@@ -117,9 +118,12 @@ public class Bomber extends Character {
         double x = this._x;
         double y = this._y;
 
+//        System.out.println(x + " " + y);
+
         if (_input.up) {
             y -= Game.getBomberSpeed();
             this._direction = 0;
+
         }
 
         if (_input.right) {
@@ -130,6 +134,8 @@ public class Bomber extends Character {
         if (_input.down) {
             y += Game.getBomberSpeed();
             this._direction = 2;
+
+
         }
 
         if (_input.left) {
@@ -137,64 +143,91 @@ public class Bomber extends Character {
             this._direction = 3;
         }
 
-        this.move(x, y);
-
         if (_input.right || _input.up || _input.down || _input.left) {
             this._moving = true;
         } else {
             this._moving = false;
         }
+
+
+        this.move(x, y);
+
+
     }
 
     @Override
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        double dependedDirectionX = x;
-        double dependedDirectionY = y;
 
-        switch (this._direction){
+        // We create 2 point to determine which block ahead bomber man, in case of bomber man in the middle of 2 block
+        // The block ahead bomber man depend on the direction
+
+        double dependedDirectionX1 = x;
+        double dependedDirectionY1 = y;
+
+        double dependedDirectionX2 = x;
+        double dependedDirectionY2 = y;
+
+        switch (this._direction) {
 
             case 0: {
-                dependedDirectionX+=Game.HALF_TITLE_SIZE;
-                dependedDirectionY-=Game.TILES_SIZE;
+                dependedDirectionX1 += 1;
+                dependedDirectionY1 -= Game.TILES_SIZE;
+                dependedDirectionX2 += Game.TILES_SIZE - 1;
+                dependedDirectionY2 -= Game.TILES_SIZE;
                 break;
             }
 
-            case 1:{
-                dependedDirectionX+=Game.TILES_SIZE;
-                dependedDirectionY-=Game.HALF_TITLE_SIZE;
+            case 1: {
+                dependedDirectionX1 += Game.TILES_SIZE ;
+                dependedDirectionY1 -= Game.TILES_SIZE - 1;
+                dependedDirectionX2 += Game.TILES_SIZE ;
+                dependedDirectionY2 -= 1;
                 break;
             }
 
-            case 2:{
-                dependedDirectionX+=Game.HALF_TITLE_SIZE;
-//                dependedDirectionY+=Game.TILES_SIZE;
+            case 2: {
+                dependedDirectionX1 += 1;
+                dependedDirectionY1 -= 1;
+                dependedDirectionX2 += Game.TILES_SIZE - 1;
+                dependedDirectionY2 -= 1;
+                System.out.println(this._x + " " + this._y + " " + dependedDirectionY1 + " " + dependedDirectionY2);
                 break;
             }
 
-            case 3:{
-                dependedDirectionY-=Game.HALF_TITLE_SIZE;
+            case 3: {
+//                dependedDirectionX1 += 1;
+                dependedDirectionY1 -= 1;
+//                dependedDirectionX2 += 1;
+                dependedDirectionY2 -= Game.TILES_SIZE - 1;
                 break;
             }
 
-            default:{
+            default: {
                 break;
             }
         }
 
-        Entity entity = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX), Coordinates.pixelToTile(dependedDirectionY), this);
-        System.out.println(entity.toString()+ " "+ Coordinates.pixelToTile(dependedDirectionX)+ " " + Coordinates.pixelToTile(dependedDirectionY) );
-        if (entity instanceof Wall|| entity instanceof Bomb || entity instanceof LayeredEntity){
-            return false;
-        }
+//        System.out.println(Coordinates.pixelToTile(45));
+
+        Entity entity1 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX1), Coordinates.pixelToTile(dependedDirectionY1), this);
+        Entity entity2 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX2), Coordinates.pixelToTile(dependedDirectionY2), this);
 
 
-        return true;
+//        System.out.print( " " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
+//        System.out.println( " " + Coordinates.pixelToTile(dependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
+//
+//        System.out.print(" " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
+//        System.out.println(" " + Coordinates.pixelToTile(dependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
+
+
+        return (entity1 instanceof Grass
+                && entity2 instanceof Grass);
     }
 
     @Override
     public void move(double xa, double ya) {
-        if (this.canMove(xa, ya)) {
+        if (this.canMove(xa, ya)&& _alive) {
             this._x = xa;
             this._y = ya;
         }
