@@ -17,6 +17,6 @@ public class Grass extends Tile {
 	 */
 	@Override
 	public boolean collide(Entity e) {
-		return true;
+		return false;
 	}
 }

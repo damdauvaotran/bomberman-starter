@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.bomb;
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -95,6 +96,19 @@ public class Bomb extends AnimatedEntitiy {
 	public boolean collide(Entity e) {
         // TODO: xử lý khi Bomber đi ra sau khi vừa đặt bom (_allowedToPassThru)
         // TODO: xử lý va chạm với Flame của Bomb khác
-        return false;
+
+		if (e instanceof Bomber){
+			if (this._allowedToPassThru){
+                this._allowedToPassThru = false;
+			    return false;
+            }
+            return true;
+		}
+
+		if (e instanceof Bomb){
+			((Bomb) e).explode();
+			return true;
+		}
+        return true;
 	}
 }

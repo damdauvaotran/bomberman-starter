@@ -50,6 +50,10 @@ public class LayeredEntity extends Entity {
 			_entities.removeLast();
 		}
 	}
+
+	public void addTop(Entity e){
+		_entities.add(e);
+	}
 	
 	public void addBeforeTop(Entity e) {
 		_entities.add(_entities.size() - 1, e);
@@ -57,8 +61,7 @@ public class LayeredEntity extends Entity {
 	
 	@Override
 	public boolean collide(Entity e) {
-		// TODO: lấy entity trên cùng ra để xử lý va chạm
-		return false;
+		return this.getTopEntity().collide(e);
 	}
 
 }

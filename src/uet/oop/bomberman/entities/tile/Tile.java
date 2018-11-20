@@ -23,7 +23,7 @@ public abstract class Tile extends Entity {
 	 */
 	@Override
 	public boolean collide(Entity e) {
-		return false;
+		return true;
 	}
 	
 	@Override

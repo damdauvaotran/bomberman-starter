@@ -84,7 +84,7 @@ public abstract class Enemy extends Character {
         double y = this._y;
 
         this._direction = _ai.calculateDirection();
-        switch (_ai.calculateDirection()) {
+        switch (this._direction) {
             case 0: {
                 y -= Game.getEnemySpeed();
                 break;
@@ -112,22 +112,94 @@ public abstract class Enemy extends Character {
 
     @Override
     public void move(double xa, double ya) {
-        if (!_alive && canMove(xa, ya)) return;
-        _y = ya;
-        _x = xa;
+        if (_alive && this.canMove(xa, ya)) {
+            _y = ya;
+            _x = xa;
+        }
     }
 
     @Override
     public boolean canMove(double x, double y) {
         // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        return true;
+        double dependedDirectionX1 = x;
+        double dependedDirectionY1 = y;
+
+        double dependedDirectionX2 = x;
+        double dependedDirectionY2 = y;
+
+        switch (this._direction) {
+
+            case 0: {
+                dependedDirectionX1 += 1;
+                dependedDirectionY1 -= Game.getCharacterWidth();
+                dependedDirectionX2 += Game.getCharacterWidth() - 1;
+                dependedDirectionY2 -= Game.getCharacterHeight();
+                break;
+            }
+
+            case 1: {
+                dependedDirectionX1 += Game.getCharacterWidth();
+                dependedDirectionY1 -= Game.getCharacterHeight() - 1;
+                dependedDirectionX2 += Game.getCharacterWidth();
+                dependedDirectionY2 -= 1;
+                break;
+            }
+
+            case 2: {
+                dependedDirectionX1 += 1;
+                dependedDirectionY1 -= 1;
+                dependedDirectionX2 += Game.getCharacterWidth() - 1;
+                dependedDirectionY2 -= 1;
+//                System.out.println(this._x + " " + this._y + " " + dependedDirectionY1 + " " + dependedDirectionY2);
+                break;
+            }
+
+            case 3: {
+                dependedDirectionY1 -= 1;
+                dependedDirectionY2 -= Game.getCharacterHeight() - 1;
+                break;
+            }
+
+            default: {
+                break;
+            }
+        }
+
+
+        Entity entity1 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX1), Coordinates.pixelToTile(dependedDirectionY1), this);
+        Entity entity2 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX2), Coordinates.pixelToTile(dependedDirectionY2), this);
+
+
+//        System.out.print( " " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
+//        System.out.println( " " + Coordinates.pixelToTile(d
+// ependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
+//
+//        System.out.print(" " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
+//        System.out.println(" " + Coordinates.pixelToTile(dependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
+
+
+        System.out.println(entity1.collide(this) + " " + entity2.collide(this));
+
+        return !(entity1.collide(this) || entity2.collide(this));
     }
 
     @Override
     public boolean collide(Entity e) {
         // TODO: xử lý va chạm với Flame
         // TODO: xử lý va chạm với Bomber
+
+        if (e instanceof Flame) {
+            this.kill();
+            return true;
+        }
+
+        if (e instanceof Bomber) {
+            ((Bomber) e).kill();
+            return true;
+        }
+
         return true;
+        // Long but easy to understand
     }
 
     @Override
