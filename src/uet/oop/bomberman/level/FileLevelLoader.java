@@ -12,6 +12,7 @@ import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
 import uet.oop.bomberman.entities.tile.item.BombItem;
+import uet.oop.bomberman.entities.tile.item.FlameItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.Screen;
@@ -42,6 +43,7 @@ public class FileLevelLoader extends LevelLoader {
             System.out.println(levelFilePathName);
             return;
         }
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String firstLine;
         String[] levelInfo;
@@ -58,6 +60,7 @@ public class FileLevelLoader extends LevelLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         _map = new char[this._height][this._width];
 
         try {
@@ -110,14 +113,14 @@ public class FileLevelLoader extends LevelLoader {
                         break;
                     }
 
-                    case '2': { // Grass tile
+                    case '2': { // Oneal
                         _board.addCharacter(new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
                         _board.addEntity(position, new Grass(x, y, Sprite.grass));
                         break;
                     }
 
                     case 'p': { // Player
-                        _board.addCharacter(new Bomber(Coordinates.tileToPixel(x), Coordinates.tileToPixel(x) + Game.TILES_SIZE, _board));
+                        _board.addCharacter(new Bomber(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
                         Screen.setOffset(0, 0);
                         _board.addEntity(position, new Grass(x, y, Sprite.grass));
                         break;
@@ -139,7 +142,7 @@ public class FileLevelLoader extends LevelLoader {
                                 new LayeredEntity(
                                         x, y,
                                         new Grass(x, y, Sprite.grass),
-                                        new BombItem(x, y, Sprite.powerup_flames),
+                                        new FlameItem(x, y, Sprite.powerup_flames),
                                         new Brick(x, y, Sprite.brick)
                                 ));
                         break;
@@ -150,7 +153,7 @@ public class FileLevelLoader extends LevelLoader {
                                 new LayeredEntity(
                                         x, y,
                                         new Grass(x, y, Sprite.grass),
-                                        new BombItem(x, y, Sprite.powerup_speed),
+                                        new SpeedItem(x, y, Sprite.powerup_speed),
                                         new Brick(x, y, Sprite.brick)
                                 ));
                         break;
