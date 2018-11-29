@@ -27,12 +27,12 @@ public class Game extends Canvas {
 
     public static final String TITLE = "BombermanGame";
 
-    public static final int TIME_BETWEEN_PLACE_BOMB = 30;
+    public static final int TIME_BETWEEN_PLACE_BOMB = 10;
 
-    private static final int BOMBRATE = 1;
+    private static final int BOMBRATE = 10;
     private static final int BOMBRADIUS = 1;
     private static final double BOMBERSPEED = 1.0;
-    private static final double ENEMY_SPEED = 1.0;
+    private static final double ENEMY_SPEED = 0.5;
 
 
     public static final int TIME = 200;

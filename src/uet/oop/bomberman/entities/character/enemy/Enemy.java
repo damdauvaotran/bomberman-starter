@@ -82,23 +82,27 @@ public abstract class Enemy extends Character {
 
         double x = this._x;
         double y = this._y;
+        if (_steps <= 0){
+            _steps= MAX_STEPS;
+            this._direction = _ai.calculateDirection();
+        }
+        _steps--;
 
-        this._direction = _ai.calculateDirection();
         switch (this._direction) {
             case 0: {
-                y -= Game.getEnemySpeed();
+                y -= _speed;
                 break;
             }
             case 1: {
-                x += Game.getEnemySpeed();
+                x += _speed;
                 break;
             }
             case 2: {
-                y += Game.getEnemySpeed();
+                y += _speed;
                 break;
             }
             case 3: {
-                x -= Game.getEnemySpeed();
+                x -=_speed;
                 break;
             }
             default: {
@@ -131,16 +135,16 @@ public abstract class Enemy extends Character {
 
             case 0: {
                 dependedDirectionX1 += 1;
-                dependedDirectionY1 -= Game.getCharacterWidth();
-                dependedDirectionX2 += Game.getCharacterWidth() - 1;
-                dependedDirectionY2 -= Game.getCharacterHeight();
+                dependedDirectionY1 -= Game.TILES_SIZE;
+                dependedDirectionX2 += Game.TILES_SIZE - 1;
+                dependedDirectionY2 -= Game.TILES_SIZE;
                 break;
             }
 
             case 1: {
-                dependedDirectionX1 += Game.getCharacterWidth();
-                dependedDirectionY1 -= Game.getCharacterHeight() - 1;
-                dependedDirectionX2 += Game.getCharacterWidth();
+                dependedDirectionX1 += Game.TILES_SIZE;
+                dependedDirectionY1 -= Game.TILES_SIZE - 1;
+                dependedDirectionX2 += Game.TILES_SIZE;
                 dependedDirectionY2 -= 1;
                 break;
             }
@@ -148,15 +152,14 @@ public abstract class Enemy extends Character {
             case 2: {
                 dependedDirectionX1 += 1;
                 dependedDirectionY1 -= 1;
-                dependedDirectionX2 += Game.getCharacterWidth() - 1;
+                dependedDirectionX2 += Game.TILES_SIZE - 1;
                 dependedDirectionY2 -= 1;
-//                System.out.println(this._x + " " + this._y + " " + dependedDirectionY1 + " " + dependedDirectionY2);
                 break;
             }
 
             case 3: {
                 dependedDirectionY1 -= 1;
-                dependedDirectionY2 -= Game.getCharacterHeight() - 1;
+                dependedDirectionY2 -= Game.TILES_SIZE - 1;
                 break;
             }
 
@@ -168,17 +171,6 @@ public abstract class Enemy extends Character {
 
         Entity entity1 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX1), Coordinates.pixelToTile(dependedDirectionY1), this);
         Entity entity2 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX2), Coordinates.pixelToTile(dependedDirectionY2), this);
-
-
-//        System.out.print( " " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
-//        System.out.println( " " + Coordinates.pixelToTile(d
-// ependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
-//
-//        System.out.print(" " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
-//        System.out.println(" " + Coordinates.pixelToTile(dependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
-
-
-        System.out.println(entity1.collide(this) + " " + entity2.collide(this));
 
         return !(entity1.collide(this) || entity2.collide(this));
     }

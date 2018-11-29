@@ -92,11 +92,7 @@ public class Bomber extends Character {
     protected void placeBomb(int x, int y) {
         // TODO: thực hiện tạo đối tượng bom, đặt vào vị trí (x, y)
         Bomb bome = new Bomb(x, y, _board);
-        Entity e = this._board.getEntity(x, y, null);
-
-        LayeredEntity layeredEntity = new LayeredEntity(x, y, e, bome);
-        int position = y * _board.getWidth() + x;
-        this._board.addEntity(position, layeredEntity);
+        this._board.addBomb(bome);
 
 
     }
@@ -227,19 +223,12 @@ public class Bomber extends Character {
 
         Entity entity1 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX1), Coordinates.pixelToTile(dependedDirectionY1), this);
         Entity entity2 = _board.getEntity(Coordinates.pixelToTile(dependedDirectionX2), Coordinates.pixelToTile(dependedDirectionY2), this);
+        Entity currentEntity = _board.getBombAt(Coordinates.pixelToTile(_x), Coordinates.pixelToTile(_y - 1));
 
-
-//        System.out.print( " " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
-//        System.out.println( " " + Coordinates.pixelToTile(d
-// ependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
-//
-//        System.out.print(" " + Coordinates.pixelToTile(dependedDirectionX1) + " " + Coordinates.pixelToTile(dependedDirectionY1));
-//        System.out.println(" " + Coordinates.pixelToTile(dependedDirectionX2) + " " + Coordinates.pixelToTile(dependedDirectionY2));
-
-
-//        System.out.println(entity1.collide(this) + " " + entity2.collide(this));
-
-        return !(entity1.collide(this) || entity2.collide(this));
+        if (currentEntity == null) {
+            return !(entity1.collide(this) || entity2.collide(this));
+        }
+        return !(entity1.collide(this) || entity2.collide(this) || currentEntity.collide(this));
     }
 
     @Override

@@ -160,7 +160,7 @@ public class FileLevelLoader extends LevelLoader {
                         _board.addEntity(position, new LayeredEntity(
                                 x, y,
                                 new Portal(x, y, Sprite.portal),
-                                new Brick(x, y, Sprite.portal)
+                                new Brick(x, y, Sprite.brick)
                         ));
                         break;
                     }
