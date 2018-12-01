@@ -162,7 +162,7 @@ public class FileLevelLoader extends LevelLoader {
                     case 'x': { // Portal tile
                         _board.addEntity(position, new LayeredEntity(
                                 x, y,
-                                new Portal(x, y, Sprite.portal),
+                                new Portal(x, y, Sprite.portal, _board),
                                 new Brick(x, y, Sprite.brick)
                         ));
                         break;

@@ -25,11 +25,12 @@ public class Game extends Canvas {
 
     public static int SCALE = 3;
 
+
     public static final String TITLE = "BombermanGame";
 
     public static final int TIME_BETWEEN_PLACE_BOMB = 10;
 
-    private static final int BOMBRATE = 10;
+    private static final int BOMBRATE = 1;
     private static final int BOMBRADIUS = 1;
     private static final double BOMBERSPEED = 1.0;
     private static final double ENEMY_SPEED = 0.5;
@@ -40,6 +41,8 @@ public class Game extends Canvas {
 
     protected static int SCREENDELAY = 3;
 
+
+    private static int numberOfEnemy = 0;
     protected static int bombRate = BOMBRATE;
     protected static int bombRadius = BOMBRADIUS;
     protected static int characterWidth = CHARACTER_WIDTH;
@@ -166,13 +169,18 @@ public class Game extends Canvas {
         }
     }
 
+    public static int getNumberOfEnemy() {
+        return numberOfEnemy;
+    }
+
+    public static void addEnemyCount(int i) {
+        numberOfEnemy += i;
+    }
+
     public static double getBomberSpeed() {
         return bomberSpeed;
     }
 
-    public static double getEnemySpeed() {
-        return enemySpeed;
-    }
 
     public static int getCharacterWidth() {
         return characterWidth;
@@ -190,9 +198,6 @@ public class Game extends Canvas {
         return bombRadius;
     }
 
-    public static void setBombRate(int _bombRate) {
-        bombRate = _bombRate;
-    }
 
     public static void addBomberSpeed(double i) {
         bomberSpeed += i;

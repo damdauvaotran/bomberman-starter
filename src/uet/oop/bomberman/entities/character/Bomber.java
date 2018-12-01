@@ -131,8 +131,6 @@ public class Bomber extends Character {
         double x = this._x;
         double y = this._y;
 
-//        System.out.println(x + " " + y);
-
         if (_input.up) {
             y -= Game.getBomberSpeed();
             this._direction = 0;
@@ -233,9 +231,38 @@ public class Bomber extends Character {
 
     @Override
     public void move(double xa, double ya) {
+
         if (this.canMove(xa, ya) && _alive) {
             this._x = xa;
             this._y = ya;
+        } else {
+            for (int i =0; i< Game.getBomberSpeed(); i++){
+                switch (this._direction) {
+                    case 0: {
+                        ya++;
+                        break;
+                    }
+                    case 1: {
+                        xa--;
+                        break;
+                    }
+
+                    case 2: {
+                        ya--;
+                        break;
+                    }
+                    case 3: {
+                        xa++;
+                        break;
+                    }
+                }
+                if (canMove(xa, ya)){
+                    this._x = xa;
+                    this._y = ya;
+                    break;
+                }
+            }
+
         }
 
     }

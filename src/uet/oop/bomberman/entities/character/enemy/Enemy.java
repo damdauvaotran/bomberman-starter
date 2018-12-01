@@ -40,6 +40,7 @@ public abstract class Enemy extends Character {
 
         _timeAfter = 20;
         _deadSprite = dead;
+        Game.addEnemyCount(1);
     }
 
     @Override
@@ -203,6 +204,7 @@ public abstract class Enemy extends Character {
 
         Message msg = new Message("+" + _points, getXMessage(), getYMessage(), 2, Color.white, 14);
         _board.addMessage(msg);
+        Game.addEnemyCount(-1);
     }
 
 
