@@ -41,7 +41,7 @@ public class FileLevelLoader extends LevelLoader {
         InputStream in = FileLevelLoader.class.getResourceAsStream(levelFilePathName);
         if (in == null) {
             System.out.println(levelFilePathName);
-            return;
+            throw  new LoadLevelException();
         }
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));

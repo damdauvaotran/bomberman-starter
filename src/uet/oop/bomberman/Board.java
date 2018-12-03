@@ -12,6 +12,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
+import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -83,6 +84,7 @@ public class Board implements IRender {
 	}
 	
 	public void nextLevel() {
+		SoundEffect.GHOST.stop();
 		loadLevel(_levelLoader.getLevel() + 1);
 	}
 	
@@ -119,7 +121,7 @@ public class Board implements IRender {
 	public boolean detectNoEnemies() {
 		int total = 0;
 		for (int i = 0; i < _characters.size(); i++) {
-			if(_characters.get(i) instanceof Bomber == false)
+			if(!(_characters.get(i) instanceof Bomber))
 				++total;
 		}
 		

@@ -77,7 +77,6 @@ public class Flame extends Entity {
 
         // In case of NullPointerException
 
-        System.out.println();
         if (flameSegmentsLength > 0) {
             _flameSegments[flameSegmentsLength - 1].setLast(true);
         }

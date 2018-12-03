@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.gui.Frame;
 import uet.oop.bomberman.input.Keyboard;
+import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -30,7 +31,7 @@ public class Game extends Canvas {
 
     public static final int TIME_BETWEEN_PLACE_BOMB = 10;
 
-    private static final int BOMBRATE = 1;
+    private static final int BOMBRATE = 10;
     private static final int BOMBRADIUS = 1;
     private static final double BOMBERSPEED = 1.0;
     private static final double ENEMY_SPEED = 0.5;
@@ -125,6 +126,8 @@ public class Game extends Canvas {
     public void start() {
         _running = true;
 
+        SoundEffect.init();
+
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
         final double ns = 1000000000.0 / 60.0; //nanosecond, 60 frames per second
@@ -150,6 +153,7 @@ public class Game extends Canvas {
 
                 renderScreen();
             } else {
+                SoundEffect.GHOST.loopInf();
                 renderGame();
             }
 

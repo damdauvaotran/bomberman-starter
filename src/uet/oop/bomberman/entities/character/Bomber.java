@@ -84,7 +84,7 @@ public class Bomber extends Character {
         if (_input.space && bombRate > 0 && this._timeBetweenPutBombs < 0) {
             Game.addBombRate(-1);
             this._timeBetweenPutBombs = Game.TIME_BETWEEN_PLACE_BOMB;
-            this.placeBomb(Coordinates.pixelToTile(this._x), Coordinates.pixelToTile(this._y - 1));
+            this.placeBomb(Coordinates.pixelToTile(this._x + Game.TILES_SIZE / 2), Coordinates.pixelToTile(this._y - Game.TILES_SIZE / 2));
         }
 
     }
@@ -236,7 +236,7 @@ public class Bomber extends Character {
             this._x = xa;
             this._y = ya;
         } else {
-            for (int i =0; i< Game.getBomberSpeed(); i++){
+            for (int i = 0; i < Game.getBomberSpeed(); i++) {
                 switch (this._direction) {
                     case 0: {
                         ya++;
@@ -256,7 +256,7 @@ public class Bomber extends Character {
                         break;
                     }
                 }
-                if (canMove(xa, ya)){
+                if (canMove(xa, ya)) {
                     this._x = xa;
                     this._y = ya;
                     break;

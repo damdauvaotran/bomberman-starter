@@ -10,6 +10,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.character.Character;
 import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.util.List;
 
@@ -81,6 +82,7 @@ public class Bomb extends AnimatedEntitiy {
     protected void explode() {
         _exploded = true;
 
+        SoundEffect.EXPLODE.play();
         // TODO: xử lý khi Character đứng tại vị trí Bomb
 
         List<Character> characterList = _board._characters;
