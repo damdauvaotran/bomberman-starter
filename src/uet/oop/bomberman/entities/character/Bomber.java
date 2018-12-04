@@ -14,6 +14,7 @@ import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
+import uet.oop.bomberman.sound.effect.SoundEffect;
 
 import java.util.Iterator;
 import java.util.List;
@@ -114,6 +115,7 @@ public class Bomber extends Character {
     @Override
     public void kill() {
         if (!_alive) return;
+        SoundEffect.GHOST.stop();
         _alive = false;
     }
 

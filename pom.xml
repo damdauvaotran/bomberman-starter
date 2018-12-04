@@ -5,7 +5,7 @@
     <version>v0.1</version>
 
     <name>Bomberman</name>
-
+    <packaging>jar</packaging>
     <build>
         <directory>target</directory>
         <outputDirectory>target/classes</outputDirectory>

@@ -18,7 +18,6 @@ public class Portal extends Tile {
 	public boolean collide(Entity e) {
 		// TODO: xử lý khi Bomber đi vào
 		if (e instanceof Bomber && Game.getNumberOfEnemy()==0 ){
-			System.out.println("Portal ");
 			_board.nextLevel();
 		}
 		return false;

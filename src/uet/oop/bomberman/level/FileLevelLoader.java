@@ -5,8 +5,7 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
-import uet.oop.bomberman.entities.character.enemy.Balloon;
-import uet.oop.bomberman.entities.character.enemy.Oneal;
+import uet.oop.bomberman.entities.character.enemy.*;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.Wall;
@@ -65,15 +64,23 @@ public class FileLevelLoader extends LevelLoader {
 
         try {
             for (int i = 0; i < this._height; i++) {
+                String str = reader.readLine();
+                System.out.println(str);
                 for (int j = 0; j < this._width; j++) {
-                    _map[i][j] = (char) reader.read();
+                    _map[i][j] = str.charAt(j);
 
                 }
-                reader.read();
             }
         } catch (IOException e) {
             e.printStackTrace();
             throw new LoadLevelException("Level is corrupted");
+        }
+
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
@@ -115,6 +122,24 @@ public class FileLevelLoader extends LevelLoader {
 
                     case '2': { // Oneal
                         _board.addCharacter(new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
+                        break;
+                    }
+
+                    case '3': { // Dahl
+                        _board.addCharacter(new Dahl(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
+                        break;
+                    }
+
+                    case '4': { // Minvo
+                        _board.addCharacter(new Minvo(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+                        _board.addEntity(position, new Grass(x, y, Sprite.grass));
+                        break;
+                    }
+
+                    case '5': { // Doria
+                        _board.addCharacter(new Doria(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
                         _board.addEntity(position, new Grass(x, y, Sprite.grass));
                         break;
                     }
